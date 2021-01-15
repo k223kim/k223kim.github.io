@@ -18,12 +18,12 @@ avatar: https://avatars1.githubusercontent.com/u/650760?v=3&s=400
 # Includes an icon in the footer for each username you enter
 footer-links:
   dribbble:
-  email:k223kim@uwaterloo.ca
+  email: k223kim@uwaterloo.ca
   facebook:
   flickr:
-  github: barryclark/jekyll-now
+  github: k223kim/k223kim.github.io
   instagram:
-  linkedin:www.linkedin.com/in/kaeun-kim-6643b0152
+  linkedin: www.linkedin.com/in/kaeun-kim-6643b0152
   pinterest:
   rss: # just type anything here for a working RSS icon
   twitter: jekyllrb
@@ -41,7 +41,7 @@ google_analytics:
 
 # Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
 # Used for Sitemap.xml and your RSS feed
-url:http://k223kim.github.io
+url: http://k223kim.github.io
 
 # If you're hosting your site at a Project repository on GitHub pages
 # (http://yourusername.github.io/repository-name)
