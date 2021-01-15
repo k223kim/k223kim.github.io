@@ -4,12 +4,14 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+### Wondering how to pronounce my name?
 
-### More Information
+It is spelled Kaeun, but it sounds like Khan!
+
+### Work Experience
 
 A place to include any other types of information that you'd like to include about yourself.
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[k223kim@uwaterloo.ca](mailto:k223kim@uwaterloo.ca)
