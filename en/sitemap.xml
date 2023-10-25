@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://k223kim.github.io/</loc>
-    <lastmod>2020-10-09T00:00:00+00:00</lastmod>
+    <lastmod>2023-10-25T18:03:00+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -15,14 +15,8 @@
                 href="https://k223kim.github.io/"
                 />
   </url><url>
-    <loc>https://k223kim.github.io/archives/</loc>
-    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://k223kim.github.io/page/</loc>
-    <lastmod>2020-10-09T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://k223kim.github.io/categories/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+    <lastmod>2023-10-25T18:03:00+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -34,6 +28,21 @@
                 href="https://k223kim.github.io/categories/"
                 />
   </url><url>
+    <loc>https://k223kim.github.io/categories/github/</loc>
+    <lastmod>2023-10-25T18:03:00+09:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/p/github-ssh-set-up/</loc>
+    <lastmod>2023-10-25T18:03:00+09:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/post/</loc>
+    <lastmod>2023-10-25T18:03:00+09:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/archives/</loc>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/page/</loc>
+    <lastmod>2020-10-09T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://k223kim.github.io/tags/css/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
@@ -44,9 +53,6 @@
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://k223kim.github.io/p/markdown-syntax-guide/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://k223kim.github.io/post/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://k223kim.github.io/categories/syntax/</loc>
