@@ -2,40 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://k223kim.github.io/ko/categories/</loc>
+    <loc>k223kim.github.io/ko/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://k223kim.github.io/categories/"
+                href="k223kim.github.io/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://k223kim.github.io/ko/categories/"
+                href="k223kim.github.io/ko/categories/"
                 />
   </url><url>
-    <loc>https://k223kim.github.io/ko/tags/</loc>
+    <loc>k223kim.github.io/ko/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://k223kim.github.io/tags/"
+                href="k223kim.github.io/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://k223kim.github.io/ko/tags/"
+                href="k223kim.github.io/ko/tags/"
                 />
   </url><url>
-    <loc>https://k223kim.github.io/ko/</loc>
+    <loc>k223kim.github.io/ko/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://k223kim.github.io/"
+                href="k223kim.github.io/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://k223kim.github.io/ko/"
+                href="k223kim.github.io/ko/"
                 />
   </url>
 </urlset>
