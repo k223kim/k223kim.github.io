@@ -2,50 +2,58 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Categories on Kaeun Kim</title>
-        <link>k223kim.github.io/categories/</link>
+        <link>https://k223kim.github.io/categories/</link>
         <description>Recent content in Categories on Kaeun Kim</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Kaeun Kim</copyright>
-        <lastBuildDate>Mon, 11 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="k223kim.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 25 Oct 2023 18:03:00 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>github</title>
+        <link>https://k223kim.github.io/categories/github/</link>
+        <pubDate>Wed, 25 Oct 2023 18:03:00 +0900</pubDate>
+        
+        <guid>https://k223kim.github.io/categories/github/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>syntax</title>
-        <link>k223kim.github.io/categories/syntax/</link>
+        <link>https://k223kim.github.io/categories/syntax/</link>
         <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
         
-        <guid>k223kim.github.io/categories/syntax/</guid>
+        <guid>https://k223kim.github.io/categories/syntax/</guid>
         <description></description>
         </item>
         <item>
         <title>themes</title>
-        <link>k223kim.github.io/categories/themes/</link>
+        <link>https://k223kim.github.io/categories/themes/</link>
         <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
         
-        <guid>k223kim.github.io/categories/themes/</guid>
+        <guid>https://k223kim.github.io/categories/themes/</guid>
         <description></description>
         </item>
         <item>
         <title>تجربة</title>
-        <link>k223kim.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9/</link>
+        <link>https://k223kim.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9/</link>
         <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
         
-        <guid>k223kim.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9/</guid>
+        <guid>https://k223kim.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9/</guid>
         <description></description>
         </item>
         <item>
         <title>تجربة مع فراغات</title>
-        <link>k223kim.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9-%D9%85%D8%B9-%D9%81%D8%B1%D8%A7%D8%BA%D8%A7%D8%AA/</link>
+        <link>https://k223kim.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9-%D9%85%D8%B9-%D9%81%D8%B1%D8%A7%D8%BA%D8%A7%D8%AA/</link>
         <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
         
-        <guid>k223kim.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9-%D9%85%D8%B9-%D9%81%D8%B1%D8%A7%D8%BA%D8%A7%D8%AA/</guid>
+        <guid>https://k223kim.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9-%D9%85%D8%B9-%D9%81%D8%B1%D8%A7%D8%BA%D8%A7%D8%AA/</guid>
         <description></description>
         </item>
         <item>
         <title>Test</title>
-        <link>k223kim.github.io/categories/test/</link>
+        <link>https://k223kim.github.io/categories/test/</link>
         <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
         
-        <guid>k223kim.github.io/categories/test/</guid>
-        <description>&lt;img src="/k223kim.github.io/categories/test/hutomo-abrianto-l2jk-uxb1BY-unsplash.jpg" alt="Featured image of post Test" /&gt;</description>
+        <guid>https://k223kim.github.io/categories/test/</guid>
+        <description>&lt;img src="https://k223kim.github.io/categories/test/hutomo-abrianto-l2jk-uxb1BY-unsplash.jpg" alt="Featured image of post Test" /&gt;</description>
         </item>
         
     </channel>

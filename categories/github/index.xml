@@ -2,20 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>github on Kaeun Kim</title>
-        <link>k223kim.github.io/categories/github/</link>
+        <link>https://k223kim.github.io/categories/github/</link>
         <description>Recent content in github on Kaeun Kim</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Kaeun Kim</copyright>
-        <lastBuildDate>Wed, 25 Oct 2023 18:03:00 +0900</lastBuildDate><atom:link href="k223kim.github.io/categories/github/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 25 Oct 2023 18:03:00 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/github/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Github Ssh Set Up</title>
-        <link>k223kim.github.io/p/github-ssh-set-up/</link>
+        <link>https://k223kim.github.io/p/github-ssh-set-up/</link>
         <pubDate>Wed, 25 Oct 2023 18:03:00 +0900</pubDate>
         
-        <guid>k223kim.github.io/p/github-ssh-set-up/</guid>
+        <guid>https://k223kim.github.io/p/github-ssh-set-up/</guid>
         <description>&lt;p&gt;Often times, you may have multiple github accounts in one Mac. Below are the steps to add ssh-key for multiple github accounts.&lt;/p&gt;
 &lt;h1 id=&#34;generate-ssh-keys&#34;&gt;Generate SSH keys&lt;/h1&gt;
-&lt;p&gt;You must generate ssh keys for &lt;strong&gt;each&lt;/strong&gt; github account. Make sure to have &lt;strong&gt;unique&lt;/strong&gt; names for each key file. Notice that the email used for the ssh key generation is &lt;strong&gt;irrelevant&lt;/strong&gt; to the github account.&lt;/p&gt;
+&lt;p&gt;You must generate ssh keys for &lt;strong&gt;each&lt;/strong&gt; github account. Make sure to have &lt;strong&gt;unique&lt;/strong&gt; names for each key file. Notice that the email used for the ssh key generation is &lt;strong&gt;irrelevant&lt;/strong&gt; to the github account. (In fact, as per this &lt;a class=&#34;link&#34; href=&#34;https://askubuntu.com/questions/801997/purpose-of-email-at-the-end-of-ssh-public-key&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;source&lt;/a&gt;, email is just a comment?)&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -78,7 +79,7 @@
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# ssh-add &amp;lt;IdentityFile&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;gt; ssh-add **~/.ssh/id_rsa_kaeun**
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh-add **~/.ssh/id_rsa_kaeun**
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Use **eval &amp;#34;$(ssh-agent -s)&amp;#34;** if necessary&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -89,7 +90,7 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git@github.com-user1:user1/your-repo-name.git
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone git@github.com-user1:user1/your-repo-name.git
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h1 id=&#34;references&#34;&gt;References&lt;/h1&gt;
