@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on Kaeun Kim</title>
-        <link>k223kim.github.io/post/</link>
+        <link>https://k223kim.github.io/post/</link>
         <description>Recent content in Posts on Kaeun Kim</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Kaeun Kim</copyright>
-        <lastBuildDate>Wed, 25 Oct 2023 23:42:52 +0900</lastBuildDate><atom:link href="k223kim.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 25 Oct 2023 23:42:52 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Linux Commands</title>
-        <link>k223kim.github.io/p/linux-commands/</link>
+        <link>https://k223kim.github.io/p/linux-commands/</link>
         <pubDate>Wed, 25 Oct 2023 23:42:52 +0900</pubDate>
         
-        <guid>k223kim.github.io/p/linux-commands/</guid>
+        <guid>https://k223kim.github.io/p/linux-commands/</guid>
         <description>&lt;ul&gt;
 &lt;li&gt;View process and GPU status&lt;/li&gt;
 &lt;/ul&gt;
@@ -39,10 +39,10 @@
         </item>
         <item>
         <title>COCO dataset and pycocotools</title>
-        <link>k223kim.github.io/p/coco-dataset-and-pycocotools/</link>
+        <link>https://k223kim.github.io/p/coco-dataset-and-pycocotools/</link>
         <pubDate>Wed, 25 Oct 2023 21:57:42 +0900</pubDate>
         
-        <guid>k223kim.github.io/p/coco-dataset-and-pycocotools/</guid>
+        <guid>https://k223kim.github.io/p/coco-dataset-and-pycocotools/</guid>
         <description>&lt;p&gt;I often use coco format detection/segmentation dataset and want to note some useful commands. The library used for coco dataset is called &lt;code&gt;pycocotools&lt;/code&gt;. Below are some common usage of &lt;code&gt;pycocotools&lt;/code&gt; (for me at least).&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -117,11 +117,11 @@
         </item>
         <item>
         <title>Github Ssh Set Up</title>
-        <link>k223kim.github.io/p/github-ssh-set-up/</link>
+        <link>https://k223kim.github.io/p/github-ssh-set-up/</link>
         <pubDate>Wed, 25 Oct 2023 18:03:00 +0900</pubDate>
         
-        <guid>k223kim.github.io/p/github-ssh-set-up/</guid>
-        <description>&lt;img src="/k223kim.github.io/p/github-ssh-set-up/GitHub-Mark.png" alt="Featured image of post Github Ssh Set Up" /&gt;&lt;p&gt;Often times, you may have multiple github accounts in one Mac. Below are the steps to add ssh-key for multiple github accounts.&lt;/p&gt;
+        <guid>https://k223kim.github.io/p/github-ssh-set-up/</guid>
+        <description>&lt;img src="https://k223kim.github.io/p/github-ssh-set-up/GitHub-Mark.png" alt="Featured image of post Github Ssh Set Up" /&gt;&lt;p&gt;Often times, you may have multiple github accounts in one Mac. Below are the steps to add ssh-key for multiple github accounts.&lt;/p&gt;
 &lt;h1 id=&#34;generate-ssh-keys&#34;&gt;Generate SSH keys&lt;/h1&gt;
 &lt;p&gt;You must generate ssh keys for &lt;strong&gt;each&lt;/strong&gt; github account. Make sure to have &lt;strong&gt;unique&lt;/strong&gt; names for each key file. Notice that the email used for the ssh key generation is &lt;strong&gt;irrelevant&lt;/strong&gt; to the github account. (In fact, as per this &lt;a class=&#34;link&#34; href=&#34;https://askubuntu.com/questions/801997/purpose-of-email-at-the-end-of-ssh-public-key&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;source&lt;/a&gt;, email is just a comment?)&lt;/p&gt;

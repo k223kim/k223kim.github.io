@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>linux on Kaeun Kim</title>
-        <link>k223kim.github.io/tags/linux/</link>
+        <link>https://k223kim.github.io/tags/linux/</link>
         <description>Recent content in linux on Kaeun Kim</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Kaeun Kim</copyright>
-        <lastBuildDate>Wed, 25 Oct 2023 23:42:52 +0900</lastBuildDate><atom:link href="k223kim.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 25 Oct 2023 23:42:52 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Linux Commands</title>
-        <link>k223kim.github.io/p/linux-commands/</link>
+        <link>https://k223kim.github.io/p/linux-commands/</link>
         <pubDate>Wed, 25 Oct 2023 23:42:52 +0900</pubDate>
         
-        <guid>k223kim.github.io/p/linux-commands/</guid>
+        <guid>https://k223kim.github.io/p/linux-commands/</guid>
         <description>&lt;ul&gt;
 &lt;li&gt;View process and GPU status&lt;/li&gt;
 &lt;/ul&gt;

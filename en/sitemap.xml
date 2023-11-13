@@ -2,82 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>k223kim.github.io/</loc>
+    <loc>https://k223kim.github.io/</loc>
     <lastmod>2023-10-25T23:42:52+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="k223kim.github.io/ko/"
+                href="https://k223kim.github.io/ko/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="k223kim.github.io/"
+                href="https://k223kim.github.io/"
                 />
   </url><url>
-    <loc>k223kim.github.io/categories/</loc>
+    <loc>https://k223kim.github.io/categories/</loc>
     <lastmod>2023-10-25T23:42:52+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="k223kim.github.io/ko/categories/"
+                href="https://k223kim.github.io/ko/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="k223kim.github.io/categories/"
+                href="https://k223kim.github.io/categories/"
                 />
   </url><url>
-    <loc>k223kim.github.io/tags/linux/</loc>
+    <loc>https://k223kim.github.io/tags/linux/</loc>
     <lastmod>2023-10-25T23:42:52+09:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/p/linux-commands/</loc>
+    <loc>https://k223kim.github.io/p/linux-commands/</loc>
     <lastmod>2023-10-25T23:42:52+09:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/categories/notes/</loc>
+    <loc>https://k223kim.github.io/categories/notes/</loc>
     <lastmod>2023-10-25T23:42:52+09:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/post/</loc>
+    <loc>https://k223kim.github.io/post/</loc>
     <lastmod>2023-10-25T23:42:52+09:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/tags/</loc>
+    <loc>https://k223kim.github.io/tags/</loc>
     <lastmod>2023-10-25T23:42:52+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="k223kim.github.io/ko/tags/"
+                href="https://k223kim.github.io/ko/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="k223kim.github.io/tags/"
+                href="https://k223kim.github.io/tags/"
                 />
   </url><url>
-    <loc>k223kim.github.io/p/coco-dataset-and-pycocotools/</loc>
+    <loc>https://k223kim.github.io/p/coco-dataset-and-pycocotools/</loc>
     <lastmod>2023-10-25T21:57:42+09:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/tags/python/</loc>
+    <loc>https://k223kim.github.io/tags/python/</loc>
     <lastmod>2023-10-25T21:57:42+09:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/tags/github/</loc>
+    <loc>https://k223kim.github.io/tags/github/</loc>
     <lastmod>2023-10-25T18:03:00+09:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/p/github-ssh-set-up/</loc>
+    <loc>https://k223kim.github.io/p/github-ssh-set-up/</loc>
     <lastmod>2023-10-25T18:03:00+09:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/about/</loc>
+    <loc>https://k223kim.github.io/about/</loc>
     <lastmod>2023-10-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/page/</loc>
+    <loc>https://k223kim.github.io/page/</loc>
     <lastmod>2023-10-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/archives/</loc>
+    <loc>https://k223kim.github.io/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>k223kim.github.io/links/</loc>
+    <loc>https://k223kim.github.io/links/</loc>
   </url><url>
-    <loc>k223kim.github.io/search/</loc>
+    <loc>https://k223kim.github.io/search/</loc>
   </url><url>
-    <loc>k223kim.github.io/categories/test/</loc>
+    <loc>https://k223kim.github.io/categories/test/</loc>
   </url>
 </urlset>

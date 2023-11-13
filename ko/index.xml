@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>김가은</title>
-        <link>k223kim.github.io/ko/</link>
+        <link>https://k223kim.github.io/ko/</link>
         <description>Recent content on 김가은</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ko</language>
-        <copyright>Kaeun Kim</copyright><atom:link href="k223kim.github.io/ko/index.xml" rel="self" type="application/rss+xml" />
+        <copyright>Kaeun Kim</copyright><atom:link href="https://k223kim.github.io/ko/index.xml" rel="self" type="application/rss+xml" />
     </channel>
 </rss>
