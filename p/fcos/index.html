@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='FCOS (Fully Conventional One Stage Object Detection) The aim of this post is to fill the gap between the connectivity of the original paper and the code implementation as much as possible to fully understand the practical aspect of FCOS.
+The key takeaways and strength of FCOS compared to other detector models are the following:
+It is not a anchor based detector. It is a anchor-free/proposal free detector. There exists three branches; classification branch, regression branch, and center-ness branch.'>
+<title>FCOS</title>
+
+<link rel='canonical' href='https://k223kim.github.io/p/fcos/'>
+
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='FCOS'>
+<meta property='og:description' content='FCOS (Fully Conventional One Stage Object Detection) The aim of this post is to fill the gap between the connectivity of the original paper and the code implementation as much as possible to fully understand the practical aspect of FCOS.
+The key takeaways and strength of FCOS compared to other detector models are the following:
+It is not a anchor based detector. It is a anchor-free/proposal free detector. There exists three branches; classification branch, regression branch, and center-ness branch.'>
+<meta property='og:url' content='https://k223kim.github.io/p/fcos/'>
+<meta property='og:site_name' content='Kaeun Kim'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-11-13T19:21:40&#43;09:00'/><meta property='article:modified_time' content='2023-11-13T19:21:40&#43;09:00'/>
+<meta name="twitter:title" content="FCOS">
+<meta name="twitter:description" content="FCOS (Fully Conventional One Stage Object Detection) The aim of this post is to fill the gap between the connectivity of the original paper and the code implementation as much as possible to fully understand the practical aspect of FCOS.
+The key takeaways and strength of FCOS compared to other detector models are the following:
+It is not a anchor based detector. It is a anchor-free/proposal free detector. There exists three branches; classification branch, regression branch, and center-ness branch.">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu35105720d296b099384c21e1bd4580a7_474561_300x0_resize_box_3.png" width="300"
+                            height="317" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🙌</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Kaeun Kim</a></h1>
+            <h2 class="site-description">Hello World!</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/k223kim'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Library</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://k223kim.github.io/" selected>English</option>
+                        
+                            <option value="https://k223kim.github.io/ko/" >한국어</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/fcos/">FCOS</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 13, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    11 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="fcos-fully-conventional-one-stage-object-detection">FCOS (Fully Conventional One Stage Object Detection)</h1>
+<p>The aim of this post is to fill the gap between the connectivity of the <a class="link" href="https://arxiv.org/pdf/1904.01355.pdf"  target="_blank" rel="noopener"
+    >original paper</a> and the <a class="link" href="https://github.com/tianzhi0549/FCOS/tree/master"  target="_blank" rel="noopener"
+    >code implementation</a> as much as possible to fully understand the practical aspect of FCOS.</p>
+<p>The key takeaways and strength of FCOS compared to other detector models are the following:</p>
+<ol>
+<li>It is not a anchor based detector. It is a <strong>anchor-free</strong>/<strong>proposal free</strong> detector.</li>
+<li>There exists three branches; classification branch, regression branch, and center-ness branch. Because of that, its loss function is composed of the classification loss, regression loss, and a center-ness loss.</li>
+</ol>
+<h3 id="fcos-architecture">FCOS Architecture</h3>
+<h4 id="fcos-overview">FCOS Overview</h4>
+<p><img src="/p/fcos/overall_architecture.png"
+	width="2168"
+	height="954"
+	srcset="/p/fcos/overall_architecture_hu6a671fc090248fdc9f1ac1b68ec57e24_337080_480x0_resize_box_3.png 480w, /p/fcos/overall_architecture_hu6a671fc090248fdc9f1ac1b68ec57e24_337080_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="overall_architecture"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="227"
+		data-flex-basis="545px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GeneralizedRCNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">images</span> <span class="o">=</span> <span class="n">to_image_list</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">tensors</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">proposals</span><span class="p">,</span> <span class="n">proposal_losses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rpn</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">roi_heads</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">x</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">detector_losses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roi_heads</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">proposals</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># RPN-only models don&#39;t have roi_heads</span>
+</span></span><span class="line"><span class="cl">            <span class="n">x</span> <span class="o">=</span> <span class="n">features</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span> <span class="o">=</span> <span class="n">proposals</span>
+</span></span><span class="line"><span class="cl">            <span class="n">detector_losses</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">losses</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">losses</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">detector_losses</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">losses</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">proposal_losses</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">losses</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>FCOS architecture has three components:</p>
+<ol>
+<li>Backbone
+<ul>
+<li><code>Input</code>: images</li>
+<li><code>Output</code>: features</li>
+</ul>
+</li>
+<li>RPN
+<ul>
+<li><code>Input</code> : images, features, targets</li>
+<li><code>Output</code> : proposals, proposal losses</li>
+<li><code>Usage</code> : uses the image features to extract proposals</li>
+</ul>
+</li>
+<li>Head
+<ul>
+<li><code>Input</code>: features, proposals, targets</li>
+<li><code>Output</code>: (detection) result, detector losses</li>
+<li><code>Usage</code>: uses the features from the backbone and the proposals from the RPN to get the final detection/segmentation output</li>
+</ul>
+</li>
+</ol>
+<h4 id="fcos-module">FCOS Module</h4>
+<p>This is the main component of FCOS RPN that computes the proposals and proposal losses. Notice that to calculate the proposal losses, we need to compute the locations. This will be further discussed below when we talk about anchor-free detectors.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FCOSModule</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Module for FCOS computation. Takes feature maps from the backbone and
+</span></span></span><span class="line"><span class="cl"><span class="s2">    FCOS outputs and losses. Only Test on FPN now.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">FCOSModule</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">head</span> <span class="o">=</span> <span class="n">FCOSHead</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">box_selector_test</span> <span class="o">=</span> <span class="n">make_fcos_postprocessor</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">loss_evaluator</span> <span class="o">=</span> <span class="n">make_fcos_loss_evaluator</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">head</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">box_selector_test</span> <span class="o">=</span> <span class="n">box_selector_test</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">loss_evaluator</span> <span class="o">=</span> <span class="n">loss_evaluator</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">box_cls</span><span class="p">,</span> <span class="n">box_regression</span><span class="p">,</span> <span class="n">centerness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">locations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_locations</span><span class="p">(</span><span class="n">features</span><span class="p">)</span> <span class="c1"># computes the locations for each feature level </span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_train</span><span class="p">(</span> <span class="c1"># calculates the training loss</span>
+</span></span><span class="line"><span class="cl">                <span class="n">locations</span><span class="p">,</span> <span class="n">box_cls</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">box_regression</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">centerness</span><span class="p">,</span> <span class="n">targets</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_test</span><span class="p">(</span> <span class="c1"># selects which box to use</span>
+</span></span><span class="line"><span class="cl">                <span class="n">locations</span><span class="p">,</span> <span class="n">box_cls</span><span class="p">,</span> <span class="n">box_regression</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">centerness</span><span class="p">,</span> <span class="n">images</span><span class="o">.</span><span class="n">image_sizes</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="fcos-head">FCOS Head</h4>
+<p>For clarity, please refer the following figure to understand each component of FCOS Head.
+<img src="/p/fcos/shared_heads.png"
+	width="1316"
+	height="1124"
+	srcset="/p/fcos/shared_heads_hu79a5a436015c3163d5470831509381e2_322597_480x0_resize_box_3.png 480w, /p/fcos/shared_heads_hu79a5a436015c3163d5470831509381e2_322597_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="shared_heads"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="117"
+		data-flex-basis="280px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FCOSHead</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">FCOSHead</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num_classes</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FCOS</span><span class="o">.</span><span class="n">NUM_CLASSES</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fpn_strides</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FCOS</span><span class="o">.</span><span class="n">FPN_STRIDES</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cls_tower</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bbox_tower</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">	    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">	    cls_tower = 4 conv layers
+</span></span></span><span class="line"><span class="cl"><span class="s2">	    bbox_tower = 4 conv layers
+</span></span></span><span class="line"><span class="cl"><span class="s2">	    &#34;&#34;&#34;</span>        
+</span></span><span class="line"><span class="cl">        <span class="c1"># initialize the bias for focal loss</span>
+</span></span><span class="line"><span class="cl">        <span class="n">prior_prob</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FCOS</span><span class="o">.</span><span class="n">PRIOR_PROB</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bias_value</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">prior_prob</span><span class="p">)</span> <span class="o">/</span> <span class="n">prior_prob</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">constant_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls_logits</span><span class="o">.</span><span class="n">bias</span><span class="p">,</span> <span class="n">bias_value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">scales</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">Scale</span><span class="p">(</span><span class="n">init_value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span> <span class="c1"># this refers to </span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">logits</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bbox_reg</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">centerness</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cls_tower</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls_tower</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">box_tower</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bbox_tower</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">logits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls_logits</span><span class="p">(</span><span class="n">cls_tower</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">centerness_on_reg</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">centerness</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centerness</span><span class="p">(</span><span class="n">box_tower</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">centerness</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centerness</span><span class="p">(</span><span class="n">cls_tower</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">bbox_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="n">l</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">bbox_pred</span><span class="p">(</span><span class="n">box_tower</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_reg_targets</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">bbox_pred</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">bbox_pred</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">bbox_reg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bbox_pred</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">bbox_reg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bbox_pred</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpn_strides</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">bbox_reg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">bbox_pred</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">logits</span><span class="p">,</span> <span class="n">bbox_reg</span><span class="p">,</span> <span class="n">centerness</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Notice that <code>cls_tower</code> and <code>bbox_tower</code> refers to the <code>classification branch</code> and <code>regression branch</code> from the original paper. Also, notice that the input <code>x</code> is a list of features on 5 different levels ($P_3$, $P_4$, $P_5$, $P_6$, $P_7$). This means that on each feature level, different bounding box regression predictions, center-ness, and logits are calculated. Note that the regression predictions on each feature level are literary in a feature-level. Additionally, the regression predictions are in the $[l, t, r, b]$ format in order to compute the center-ness later on.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># FCOS/fcos_core/modeling/rpn/fcos/loss.py</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">compute_centerness_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reg_targets</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">left_right</span> <span class="o">=</span> <span class="n">reg_targets</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">top_bottom</span> <span class="o">=</span> <span class="n">reg_targets</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">centerness</span> <span class="o">=</span> <span class="p">(</span><span class="n">left_right</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">left_right</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> \
+</span></span><span class="line"><span class="cl">                      <span class="p">(</span><span class="n">top_bottom</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">top_bottom</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">centerness</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>However, our target bounding boxes are in pixels (e.g. in a coco-format bounding box, it will be $[x, y, w, h]$). That being said, we have to convert the gt bounding box annotations (pixel level) to a feature-level bounding box annotations and convert the bbox annotation to a $[l,r,t,b]$ format.</p>
+<p>One thing to note is how when we are performing inference of FCOS, we have to multiply the FPN strides to convert the feature-level regression output to a pixel level output.</p>
+<h3 id="what-does-it-mean-to-have-a-anchor-free-detector">What does it mean to have a anchor-free detector?</h3>
+<blockquote>
+<p>Anchor boxes can be viewed as pre-defined sliding windows or proposals, which are classified as positive or negative patches, with an extra offsets regression to refine the prediction of bounding box locations.
+&hellip;
+(Anchor based detectors) often employ intersection over union (IOU) between anchor boxes and ground-truth boxes to determine the label of an anchor box.</p>
+</blockquote>
+<p>The most common example of an anchor-based detector is <strong>Faster R-CNN</strong>. The following code block shows how Faster R-CNN uses anchors to calculate the (bounding box) regression loss. In order to calculate the regression loss, we have to figure out the regression target from the target bounding boxes and predefined anchors. See below how IOU (Intersection Over Union) is calculated for each target bounding box, anchor pair to get <code>regression target</code> along with their <code>labels</code> (whether it is an object or not/background or foreground).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># simplified code block from FCOS/fcos_core/modeling/rpn/loss.py</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">match_targets_to_anchors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anchor</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">copied_fields</span><span class="o">=</span><span class="p">[]):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">match_quality_matrix</span> <span class="o">=</span> <span class="n">boxlist_iou</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">anchor</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">matched_idxs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal_matcher</span><span class="p">(</span><span class="n">match_quality_matrix</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># RPN doesn&#39;t need any fields from target</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># for creating the labels, so clear them all</span>
+</span></span><span class="line"><span class="cl">        <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">copy_with_fields</span><span class="p">(</span><span class="n">copied_fields</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># get the targets corresponding GT for each anchor</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># NB: need to clamp the indices because we can have a single</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># GT in the image, and matched_idxs can be -2, which goes</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># out of bounds</span>
+</span></span><span class="line"><span class="cl">        <span class="n">matched_targets</span> <span class="o">=</span> <span class="n">target</span><span class="p">[</span><span class="n">matched_idxs</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">matched_targets</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&#34;matched_idxs&#34;</span><span class="p">,</span> <span class="n">matched_idxs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">matched_targets</span>    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">prepare_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anchors</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">regression_targets</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">anchors_per_image</span><span class="p">,</span> <span class="n">targets_per_image</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">anchors</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># calculates iou between target bounding boxes and anchors</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># returns targets that matches the anchors</span>
+</span></span><span class="line"><span class="cl">            <span class="n">matched_targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_targets_to_anchors</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">anchors_per_image</span><span class="p">,</span> <span class="n">targets_per_image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">copied_fields</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">matched_idxs</span> <span class="o">=</span> <span class="n">matched_targets</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="s2">&#34;matched_idxs&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">labels_per_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_labels_func</span><span class="p">(</span><span class="n">matched_targets</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">labels_per_image</span> <span class="o">=</span> <span class="n">labels_per_image</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Background (negative examples)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bg_indices</span> <span class="o">=</span> <span class="n">matched_idxs</span> <span class="o">==</span> <span class="n">Matcher</span><span class="o">.</span><span class="n">BELOW_LOW_THRESHOLD</span>
+</span></span><span class="line"><span class="cl">            <span class="n">labels_per_image</span><span class="p">[</span><span class="n">bg_indices</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># discard anchors that go out of the boundaries of the image</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="s2">&#34;not_visibility&#34;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">discard_cases</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">labels_per_image</span><span class="p">[</span><span class="o">~</span><span class="n">anchors_per_image</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="s2">&#34;visibility&#34;</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># discard indices that are between thresholds</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="s2">&#34;between_thresholds&#34;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">discard_cases</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">inds_to_discard</span> <span class="o">=</span> <span class="n">matched_idxs</span> <span class="o">==</span> <span class="n">Matcher</span><span class="o">.</span><span class="n">BETWEEN_THRESHOLDS</span>
+</span></span><span class="line"><span class="cl">                <span class="n">labels_per_image</span><span class="p">[</span><span class="n">inds_to_discard</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># compute regression targets</span>
+</span></span><span class="line"><span class="cl">            <span class="n">regression_targets_per_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_coder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">matched_targets</span><span class="o">.</span><span class="n">bbox</span><span class="p">,</span> <span class="n">anchors_per_image</span><span class="o">.</span><span class="n">bbox</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">labels_per_image</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">regression_targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">regression_targets_per_image</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">labels</span><span class="p">,</span> <span class="n">regression_targets</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>On the other hand, <strong>FCOS</strong> uses the following code block to convert the target bounding boxes to compute the regression target by calculating locations</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">prepare_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">object_sizes_of_interest</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="mi">512</span><span class="p">,</span> <span class="n">INF</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">expanded_object_sizes_of_interest</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">points_per_level</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">object_sizes_of_interest_per_level</span> <span class="o">=</span> \
+</span></span><span class="line"><span class="cl">                <span class="n">points_per_level</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">(</span><span class="n">object_sizes_of_interest</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">expanded_object_sizes_of_interest</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">object_sizes_of_interest_per_level</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points_per_level</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">expanded_object_sizes_of_interest</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">expanded_object_sizes_of_interest</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num_points_per_level</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">points_per_level</span><span class="p">)</span> <span class="k">for</span> <span class="n">points_per_level</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">num_points_per_level</span> <span class="o">=</span> <span class="n">num_points_per_level</span>
+</span></span><span class="line"><span class="cl">        <span class="n">points_all_level</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">labels</span><span class="p">,</span> <span class="n">reg_targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_targets_for_locations</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">points_all_level</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">expanded_object_sizes_of_interest</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">num_points_per_level</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">reg_targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">reg_targets</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">num_points_per_level</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">labels_level_first</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">reg_targets_level_first</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">labels_level_first</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">labels_per_im</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="k">for</span> <span class="n">labels_per_im</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">reg_targets_per_level</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                <span class="n">reg_targets_per_im</span><span class="p">[</span><span class="n">level</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">reg_targets_per_im</span> <span class="ow">in</span> <span class="n">reg_targets</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_reg_targets</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">reg_targets_per_level</span> <span class="o">=</span> <span class="n">reg_targets_per_level</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpn_strides</span><span class="p">[</span><span class="n">level</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">reg_targets_level_first</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg_targets_per_level</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">labels_level_first</span><span class="p">,</span> <span class="n">reg_targets_level_first</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="personal-notes">Personal Notes</h3>
+<p>I got a chance to make use of the FCOS (specifically, <a class="link" href="https://arxiv.org/pdf/2003.05664.pdf"  target="_blank" rel="noopener"
+    >CondInst</a> and <a class="link" href="https://arxiv.org/pdf/2012.02310.pdf"  target="_blank" rel="noopener"
+    >BoxInst</a>). I&rsquo;ve written what I wanted to note during different experiments and implementations down below.</p>
+<h4 id="adding-new-heads">Adding new heads</h4>
+<p>In order to use FCOS to calculate <em>something else</em> (other than detection or classification), using the bounding box features (or the classification feature, or maybe both), <strong>adding another head</strong> can be helpful. That means something like the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FCOSHead</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">FCOSHead</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># original heads</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">cls_logits</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">in_channels</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">padding</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">bbox_pred</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">in_channels</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">padding</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">centerness</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">in_channels</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">padding</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># adding another head</span>
+</span></span><span class="line"><span class="cl">		<span class="bp">self</span><span class="o">.</span><span class="n">volume_pred</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="feature-map-to-pixel-space-input-image-space">Feature map to pixel space (input image space)</h4>
+<blockquote>
+<p>For each location $(x, y)$ on the feature map $F_i$ , we can map it back onto the input image as $(\lfloor \frac{s}{2}\rfloor + xs, \lfloor \frac{s}{2} \rfloor+ ys)$ which is near the center of the receptive field of the location $(x, y)$. ($s$ is the total stride until the layer)</p>
+</blockquote>
+<p>This means that when the regression output is $[0.75, 0.6, 0.8, 0.8]$ at the feature level where the stride is 128, the actual predicted bounding box area is $(0.75 (left) + 0.8 (right))\times (0.6(top) + 0.8 (bottom)) \times 128^2 (stride)$.</p>
+<h4 id="concatenating-features">Concatenating features</h4>
+<p>When concatenating input features, (here, I wanted to concatenate the classification features and bounding box regression features to make use of the class and the bounding box information all together) it can be done as the following</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">ctrness_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctrness</span><span class="p">(</span><span class="n">bbox_tower</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bbox_pred</span><span class="p">(</span><span class="n">bbox_tower</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">logits_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls_logits</span><span class="p">(</span><span class="n">cls_tower</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg_pred</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">scale</span><span class="p">(</span><span class="n">reg_pred</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#concatenate two features</span>
+</span></span><span class="line"><span class="cl"><span class="n">two_towers</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">bbox_tower</span><span class="p">,</span> <span class="n">cls_tower</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg_pred2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">another_head</span><span class="p">(</span><span class="n">two_towers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg_pred2</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">reg_pred2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="fcos-code-structure-breakdown">FCOS code structure breakdown</h4>
+<p>I wanted to understand the original repository&rsquo;s code structure (based on <code>benchmark r-cnn</code>&rsquo;s structure). Further investigation regarding the code structure will be done later on.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── configs <span class="c1"># configs for each variation of model architecture</span>
+</span></span><span class="line"><span class="cl">├── demo
+</span></span><span class="line"><span class="cl">├── docker
+</span></span><span class="line"><span class="cl">├── fcos
+</span></span><span class="line"><span class="cl">│   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   ├── bin
+</span></span><span class="line"><span class="cl">│   ├── configs -&gt; ../configs/fcos
+</span></span><span class="line"><span class="cl">│   └── fcos.py <span class="c1">#main FCOS</span>
+</span></span><span class="line"><span class="cl">├── fcos_core
+</span></span><span class="line"><span class="cl">│   ├── README.md
+</span></span><span class="line"><span class="cl">│   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   ├── config
+</span></span><span class="line"><span class="cl">│   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   ├── defaults.py
+</span></span><span class="line"><span class="cl">│   │   └── paths_catalog.py
+</span></span><span class="line"><span class="cl">│   ├── csrc
+</span></span><span class="line"><span class="cl">│   ├── data <span class="c1"># handling dataset (e.g. dataset/loader, batch sampler, collate..)</span>
+</span></span><span class="line"><span class="cl">│   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   ├── build.py
+</span></span><span class="line"><span class="cl">│   │   ├── collate_batch.py
+</span></span><span class="line"><span class="cl">│   │   ├── datasets
+</span></span><span class="line"><span class="cl">│   │   ├── samplers
+</span></span><span class="line"><span class="cl">│   │   └── transforms
+</span></span><span class="line"><span class="cl">│   ├── engine 
+</span></span><span class="line"><span class="cl">│   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   ├── bbox_aug.py
+</span></span><span class="line"><span class="cl">│   │   ├── inference.py
+</span></span><span class="line"><span class="cl">│   │   └── trainer.py
+</span></span><span class="line"><span class="cl">│   ├── layers
+</span></span><span class="line"><span class="cl">│   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   ├── _utils.py
+</span></span><span class="line"><span class="cl">│   │   ├── batch_norm.py
+</span></span><span class="line"><span class="cl">│   │   ├── dcn
+</span></span><span class="line"><span class="cl">│   │   ├── iou_loss.py
+</span></span><span class="line"><span class="cl">│   │   ├── misc.py
+</span></span><span class="line"><span class="cl">│   │   ├── nms.py
+</span></span><span class="line"><span class="cl">│   │   ├── roi_align.py
+</span></span><span class="line"><span class="cl">│   │   ├── roi_pool.py
+</span></span><span class="line"><span class="cl">│   │   ├── scale.py
+</span></span><span class="line"><span class="cl">│   │   ├── sigmoid_focal_loss.py
+</span></span><span class="line"><span class="cl">│   │   └── smooth_l1_loss.py
+</span></span><span class="line"><span class="cl">│   ├── modeling <span class="c1"># different components of the architecture</span>
+</span></span><span class="line"><span class="cl">│   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   ├── backbone <span class="c1"># different backbones to extract features</span>
+</span></span><span class="line"><span class="cl">│   │   ├── detector
+</span></span><span class="line"><span class="cl">│   │   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   │   ├── detectors.py
+</span></span><span class="line"><span class="cl">│   │   │   └── generalized_rcnn.py
+</span></span><span class="line"><span class="cl">│   │   ├── roi_heads <span class="c1"># different heads</span>
+</span></span><span class="line"><span class="cl">│   │   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   │   ├── box_head
+</span></span><span class="line"><span class="cl">│   │   │   ├── keypoint_head
+</span></span><span class="line"><span class="cl">│   │   │   ├── mask_head
+</span></span><span class="line"><span class="cl">│   │   │   └── roi_heads.py
+</span></span><span class="line"><span class="cl">│   │   ├── rpn <span class="c1"># different Region Proposal Networks</span>
+</span></span><span class="line"><span class="cl">│   │   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   │   ├── anchor_generator.py
+</span></span><span class="line"><span class="cl">│   │   │   ├── fcos
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── fcos.py <span class="c1"># has FCOS module and head</span>
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── inference.py
+</span></span><span class="line"><span class="cl">│   │   │   │   └── loss.py
+</span></span><span class="line"><span class="cl">│   │   │   ├── inference.py
+</span></span><span class="line"><span class="cl">│   │   │   ├── loss.py
+</span></span><span class="line"><span class="cl">│   │   │   ├── retinanet
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── __init__.py
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── inference.py
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── loss.py
+</span></span><span class="line"><span class="cl">│   │   │   │   └── retinanet.py
+</span></span><span class="line"><span class="cl">│   │   │   ├── rpn.py <span class="c1"># this has build_rpn() to call different rpns</span>
+</span></span><span class="line"><span class="cl">│   │   │   └── utils.py
+</span></span><span class="line"><span class="cl">│   │   └── utils.py
+</span></span><span class="line"><span class="cl">│   ├── solver
+</span></span><span class="line"><span class="cl">│   ├── structures
+</span></span><span class="line"><span class="cl">│   └── utils
+</span></span><span class="line"><span class="cl">├── onnx
+</span></span><span class="line"><span class="cl">├── requirements.txt
+</span></span><span class="line"><span class="cl">├── setup.py
+</span></span><span class="line"><span class="cl">├── tests
+</span></span><span class="line"><span class="cl">└── tools
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 Kaeun Kim
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
