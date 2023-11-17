@@ -7,21 +7,21 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Kaeun Kim</copyright>
-        <lastBuildDate>Wed, 25 Oct 2023 23:42:52 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 17 Nov 2023 14:31:50 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>DL</title>
+        <link>https://k223kim.github.io/categories/dl/</link>
+        <pubDate>Fri, 17 Nov 2023 14:31:50 +0900</pubDate>
+        
+        <guid>https://k223kim.github.io/categories/dl/</guid>
+        <description>&lt;img src="https://k223kim.github.io/categories/dl/dl.png" alt="Featured image of post DL" /&gt;</description>
+        </item>
+        <item>
         <title>Notes</title>
         <link>https://k223kim.github.io/categories/notes/</link>
         <pubDate>Wed, 25 Oct 2023 23:42:52 +0900</pubDate>
         
         <guid>https://k223kim.github.io/categories/notes/</guid>
         <description>&lt;img src="https://k223kim.github.io/categories/notes/urbanbrush-20190509114253808633.png" alt="Featured image of post Notes" /&gt;</description>
-        </item>
-        <item>
-        <title>Test</title>
-        <link>https://k223kim.github.io/categories/test/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://k223kim.github.io/categories/test/</guid>
-        <description>&lt;img src="https://k223kim.github.io/categories/test/hutomo-abrianto-l2jk-uxb1BY-unsplash.jpg" alt="Featured image of post Test" /&gt;</description>
         </item>
         
     </channel>

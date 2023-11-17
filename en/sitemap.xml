@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://k223kim.github.io/</loc>
-    <lastmod>2023-11-13T19:21:40+09:00</lastmod>
+    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -15,14 +15,8 @@
                 href="https://k223kim.github.io/"
                 />
   </url><url>
-    <loc>https://k223kim.github.io/p/fcos/</loc>
-    <lastmod>2023-11-13T19:21:40+09:00</lastmod>
-  </url><url>
-    <loc>https://k223kim.github.io/post/</loc>
-    <lastmod>2023-11-13T19:21:40+09:00</lastmod>
-  </url><url>
     <loc>https://k223kim.github.io/categories/</loc>
-    <lastmod>2023-10-25T23:42:52+09:00</lastmod>
+    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -33,6 +27,15 @@
                 hreflang="en"
                 href="https://k223kim.github.io/categories/"
                 />
+  </url><url>
+    <loc>https://k223kim.github.io/categories/dl/</loc>
+    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/p/fcos/</loc>
+    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/post/</loc>
+    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
   </url><url>
     <loc>https://k223kim.github.io/tags/linux/</loc>
     <lastmod>2023-10-25T23:42:52+09:00</lastmod>
@@ -80,7 +83,5 @@
     <loc>https://k223kim.github.io/links/</loc>
   </url><url>
     <loc>https://k223kim.github.io/search/</loc>
-  </url><url>
-    <loc>https://k223kim.github.io/categories/test/</loc>
   </url>
 </urlset>

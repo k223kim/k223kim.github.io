@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='FCOS (Fully Conventional One Stage Object Detection) The aim of this post is to fill the gap between the connectivity of the original paper and the code implementation as much as possible to fully understand the practical aspect of FCOS.
-The key takeaways and strength of FCOS compared to other detector models are the following:
-It is not a anchor based detector. It is a anchor-free/proposal free detector. There exists three branches; classification branch, regression branch, and center-ness branch.'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Exploring FCOS (Fully Convolutional One Stage Object Detection)'>
 <title>FCOS</title>
 
 <link rel='canonical' href='https://k223kim.github.io/p/fcos/'>
 
 <link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='FCOS'>
-<meta property='og:description' content='FCOS (Fully Conventional One Stage Object Detection) The aim of this post is to fill the gap between the connectivity of the original paper and the code implementation as much as possible to fully understand the practical aspect of FCOS.
-The key takeaways and strength of FCOS compared to other detector models are the following:
-It is not a anchor based detector. It is a anchor-free/proposal free detector. There exists three branches; classification branch, regression branch, and center-ness branch.'>
+<meta property='og:description' content='Exploring FCOS (Fully Convolutional One Stage Object Detection)'>
 <meta property='og:url' content='https://k223kim.github.io/p/fcos/'>
 <meta property='og:site_name' content='Kaeun Kim'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-11-13T19:21:40&#43;09:00'/><meta property='article:modified_time' content='2023-11-13T19:21:40&#43;09:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-11-17T14:31:50&#43;09:00'/><meta property='article:modified_time' content='2023-11-17T14:31:50&#43;09:00'/>
 <meta name="twitter:title" content="FCOS">
-<meta name="twitter:description" content="FCOS (Fully Conventional One Stage Object Detection) The aim of this post is to fill the gap between the connectivity of the original paper and the code implementation as much as possible to fully understand the practical aspect of FCOS.
-The key takeaways and strength of FCOS compared to other detector models are the following:
-It is not a anchor based detector. It is a anchor-free/proposal free detector. There exists three branches; classification branch, regression branch, and center-ness branch.">
+<meta name="twitter:description" content="Exploring FCOS (Fully Convolutional One Stage Object Detection)">
     </head>
     <body class="
     article-page
@@ -257,12 +251,24 @@ It is not a anchor based detector. It is a anchor-free/proposal free detector. T
 
     <div class="article-details">
     
+    <header class="article-category">
+        
+            <a href="/categories/dl/" style="background-color: #2a369d; color: #fff;">
+                DL
+            </a>
+        
+    </header>
+    
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
             <a href="/p/fcos/">FCOS</a>
         </h2>
     
+        
+        <h3 class="article-subtitle">
+            Exploring FCOS (Fully Convolutional One Stage Object Detection)
+        </h3>
         
     </div>
 
@@ -282,7 +288,7 @@ It is not a anchor based detector. It is a anchor-free/proposal free detector. T
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Nov 13, 2023</time>
+                <time class="article-time--published">Nov 17, 2023</time>
             </div>
         
 
@@ -312,7 +318,7 @@ It is not a anchor based detector. It is a anchor-free/proposal free detector. T
     <section class="article-content">
     
     
-    <h1 id="fcos-fully-conventional-one-stage-object-detection">FCOS (Fully Conventional One Stage Object Detection)</h1>
+    <h1 id="fcos-fully-convolutional-one-stage-object-detection">FCOS (Fully Convolutional One Stage Object Detection)</h1>
 <p>The aim of this post is to fill the gap between the connectivity of the <a class="link" href="https://arxiv.org/pdf/1904.01355.pdf"  target="_blank" rel="noopener"
     >original paper</a> and the <a class="link" href="https://github.com/tianzhi0549/FCOS/tree/master"  target="_blank" rel="noopener"
     >code implementation</a> as much as possible to fully understand the practical aspect of FCOS.</p>
@@ -609,15 +615,69 @@ It is not a anchor based detector. It is a anchor-free/proposal free detector. T
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">centerness</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>However, our target bounding boxes are in pixels (e.g. in a coco-format bounding box, it will be $[x, y, w, h]$). That being said, we have to convert the gt bounding box annotations (pixel level) to a feature-level bounding box annotations and convert the bbox annotation to a $[l,r,t,b]$ format.</p>
-<p>One thing to note is how when we are performing inference of FCOS, we have to multiply the FPN strides to convert the feature-level regression output to a pixel level output.</p>
-<h3 id="what-does-it-mean-to-have-a-anchor-free-detector">What does it mean to have a anchor-free detector?</h3>
+</div><p>However, our target bounding boxes are in pixels (e.g. in a coco-format bounding box, it will be $[x, y, w, h]$). That being said, we have to convert the gt bounding box annotations (pixel level) to a feature-level bounding box annotations and convert the bbox annotation to a $[l,t,r,b]$ format.</p>
+<p>One thing to note is how when we are performing inference of FCOS, we have to multiply the FPN strides to convert the feature-level regression output to a pixel level output. See the below code block to see how <code>FCOSHead</code> multiplies the FPN strides during inference:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">logits</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bbox_reg</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">centerness</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cls_tower</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls_tower</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">box_tower</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bbox_tower</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">logits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls_logits</span><span class="p">(</span><span class="n">cls_tower</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">centerness_on_reg</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">centerness</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centerness</span><span class="p">(</span><span class="n">box_tower</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">centerness</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centerness</span><span class="p">(</span><span class="n">cls_tower</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">bbox_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="n">l</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">bbox_pred</span><span class="p">(</span><span class="n">box_tower</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_reg_targets</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">bbox_pred</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">bbox_pred</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">bbox_reg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bbox_pred</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span> <span class="c1"># during inferen</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">bbox_reg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bbox_pred</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpn_strides</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">bbox_reg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">bbox_pred</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">logits</span><span class="p">,</span> <span class="n">bbox_reg</span><span class="p">,</span> <span class="n">centerness</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="what-does-it-mean-to-have-a-anchor-free-detector">What does it mean to have a anchor-free detector?</h3>
 <blockquote>
 <p>Anchor boxes can be viewed as pre-defined sliding windows or proposals, which are classified as positive or negative patches, with an extra offsets regression to refine the prediction of bounding box locations.
 &hellip;
 (Anchor based detectors) often employ intersection over union (IOU) between anchor boxes and ground-truth boxes to determine the label of an anchor box.</p>
 </blockquote>
-<p>The most common example of an anchor-based detector is <strong>Faster R-CNN</strong>. The following code block shows how Faster R-CNN uses anchors to calculate the (bounding box) regression loss. In order to calculate the regression loss, we have to figure out the regression target from the target bounding boxes and predefined anchors. See below how IOU (Intersection Over Union) is calculated for each target bounding box, anchor pair to get <code>regression target</code> along with their <code>labels</code> (whether it is an object or not/background or foreground).</p>
+<p>The most common example of an anchor-based detector is <strong>Faster R-CNN</strong>. The following code block shows how Faster R-CNN uses anchors to calculate the (bounding box) regression loss. In order to calculate the regression loss, we have to figure out the regression target from the target bounding boxes and predefined anchors. See below how IOU (Intersection Over Union) is calculated for each target bounding box and anchor pair to get <code>regression target</code> along with their <code>labels</code> (whether it is an object or not/background or foreground).</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -828,7 +888,7 @@ It is not a anchor based detector. It is a anchor-free/proposal free detector. T
     >CondInst</a> and <a class="link" href="https://arxiv.org/pdf/2012.02310.pdf"  target="_blank" rel="noopener"
     >BoxInst</a>). I&rsquo;ve written what I wanted to note during different experiments and implementations down below.</p>
 <h4 id="adding-new-heads">Adding new heads</h4>
-<p>In order to use FCOS to calculate <em>something else</em> (other than detection or classification), using the bounding box features (or the classification feature, or maybe both), <strong>adding another head</strong> can be helpful. That means something like the following:</p>
+<p>In order to use FCOS to calculate <em>something else</em> (other than detection or classification), using the bounding box features (or the classification feature, or maybe both), <strong>adding another head</strong> can be helpful. That means something like the following (+I realized how a &lsquo;head&rsquo; refers to a single convolutional layer.):</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -903,7 +963,8 @@ It is not a anchor based detector. It is a anchor-free/proposal free detector. T
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="fcos-code-structure-breakdown">FCOS code structure breakdown</h4>
-<p>I wanted to understand the original repository&rsquo;s code structure (based on <code>benchmark r-cnn</code>&rsquo;s structure). Further investigation regarding the code structure will be done later on.</p>
+<p>I wanted to understand the original repository&rsquo;s code structure (based on <a class="link" href="https://github.com/facebookresearch/maskrcnn-benchmark"  target="_blank" rel="noopener"
+    >maskrcnn-benchmark</a>&rsquo;s structure). Some comments are added to the code structure.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1094,6 +1155,30 @@ It is not a anchor based detector. It is a anchor-free/proposal free detector. T
     </footer>
 
 
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
     
 </article>
 
