@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://k223kim.github.io/</loc>
-    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
+    <lastmod>2023-11-30T10:12:24+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -16,7 +16,7 @@
                 />
   </url><url>
     <loc>https://k223kim.github.io/categories/</loc>
-    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
+    <lastmod>2023-11-30T10:12:24+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -28,26 +28,20 @@
                 href="https://k223kim.github.io/categories/"
                 />
   </url><url>
-    <loc>https://k223kim.github.io/categories/dl/</loc>
-    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
+    <loc>https://k223kim.github.io/categories/db/</loc>
+    <lastmod>2023-11-30T10:12:24+09:00</lastmod>
   </url><url>
-    <loc>https://k223kim.github.io/p/fcos/</loc>
-    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
+    <loc>https://k223kim.github.io/tags/mysql/</loc>
+    <lastmod>2023-11-30T10:12:24+09:00</lastmod>
   </url><url>
     <loc>https://k223kim.github.io/post/</loc>
-    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
+    <lastmod>2023-11-30T10:12:24+09:00</lastmod>
   </url><url>
-    <loc>https://k223kim.github.io/tags/linux/</loc>
-    <lastmod>2023-10-25T23:42:52+09:00</lastmod>
-  </url><url>
-    <loc>https://k223kim.github.io/p/linux-commands/</loc>
-    <lastmod>2023-10-25T23:42:52+09:00</lastmod>
-  </url><url>
-    <loc>https://k223kim.github.io/categories/notes/</loc>
-    <lastmod>2023-10-25T23:42:52+09:00</lastmod>
+    <loc>https://k223kim.github.io/p/stored-procedure/</loc>
+    <lastmod>2023-11-30T10:12:24+09:00</lastmod>
   </url><url>
     <loc>https://k223kim.github.io/tags/</loc>
-    <lastmod>2023-10-25T23:42:52+09:00</lastmod>
+    <lastmod>2023-11-30T10:12:24+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -58,6 +52,21 @@
                 hreflang="en"
                 href="https://k223kim.github.io/tags/"
                 />
+  </url><url>
+    <loc>https://k223kim.github.io/categories/dl/</loc>
+    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/p/fcos/</loc>
+    <lastmod>2023-11-17T14:31:50+09:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/tags/linux/</loc>
+    <lastmod>2023-10-25T23:42:52+09:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/p/linux-commands/</loc>
+    <lastmod>2023-10-25T23:42:52+09:00</lastmod>
+  </url><url>
+    <loc>https://k223kim.github.io/categories/notes/</loc>
+    <lastmod>2023-10-25T23:42:52+09:00</lastmod>
   </url><url>
     <loc>https://k223kim.github.io/p/coco-dataset-and-pycocotools/</loc>
     <lastmod>2023-10-25T21:57:42+09:00</lastmod>
