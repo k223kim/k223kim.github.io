@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Setting up ssh key for github accounts'>
-<title>Github Ssh Set Up</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Git commit and branch conventions'>
+<title>Git Conventions</title>
 
-<link rel='canonical' href='https://k223kim.github.io/p/github-ssh-set-up/'>
+<link rel='canonical' href='https://k223kim.github.io/p/git-conventions/'>
 
-<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Github Ssh Set Up'>
-<meta property='og:description' content='Setting up ssh key for github accounts'>
-<meta property='og:url' content='https://k223kim.github.io/p/github-ssh-set-up/'>
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Git Conventions'>
+<meta property='og:description' content='Git commit and branch conventions'>
+<meta property='og:url' content='https://k223kim.github.io/p/git-conventions/'>
 <meta property='og:site_name' content='Kaeun Kim'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='github' /><meta property='article:published_time' content='2023-10-25T18:03:00&#43;09:00'/><meta property='article:modified_time' content='2023-10-25T18:03:00&#43;09:00'/><meta property='og:image' content='https://k223kim.github.io/p/github-ssh-set-up/GitHub-Mark.png' />
-<meta name="twitter:title" content="Github Ssh Set Up">
-<meta name="twitter:description" content="Setting up ssh key for github accounts"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://k223kim.github.io/p/github-ssh-set-up/GitHub-Mark.png' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='github' /><meta property='article:published_time' content='2023-12-04T00:08:07&#43;09:00'/><meta property='article:modified_time' content='2023-12-04T00:08:07&#43;09:00'/>
+<meta name="twitter:title" content="Git Conventions">
+<meta name="twitter:description" content="Git commit and branch conventions">
     </head>
     <body class="
     article-page
@@ -247,20 +246,8 @@
     
 
             <main class="main full-width">
-    <article class="has-image main-article">
+    <article class="main-article">
     <header class="article-header">
-        <div class="article-image">
-            <a href="/p/github-ssh-set-up/">
-                <img src="/p/github-ssh-set-up/GitHub-Mark_hu9d76232819f01fb0167220a8ea045d21_7249_800x0_resize_box_3.png"
-                        srcset="/p/github-ssh-set-up/GitHub-Mark_hu9d76232819f01fb0167220a8ea045d21_7249_800x0_resize_box_3.png 800w, /p/github-ssh-set-up/GitHub-Mark_hu9d76232819f01fb0167220a8ea045d21_7249_1600x0_resize_box_3.png 1600w"
-                        width="800" 
-                        height="800" 
-                        loading="lazy"
-                        alt="Featured image of post Github Ssh Set Up" />
-                
-            </a>
-        </div>
-    
 
     <div class="article-details">
     
@@ -275,12 +262,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/github-ssh-set-up/">Github Ssh Set Up</a>
+            <a href="/p/git-conventions/">Git Conventions</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Setting up ssh key for github accounts
+            Git commit and branch conventions
         </h3>
         
     </div>
@@ -301,7 +288,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Oct 25, 2023</time>
+                <time class="article-time--published">Dec 04, 2023</time>
             </div>
         
 
@@ -331,64 +318,156 @@
     <section class="article-content">
     
     
-    <p>Often times, you may have multiple github accounts in one Mac. Below are the steps to add ssh-key for multiple github accounts.</p>
-<h1 id="generate-ssh-keys">Generate SSH keys</h1>
-<p>You must generate ssh keys for <strong>each</strong> github account. Make sure to have <strong>unique</strong> names for each key file. Notice that the email used for the ssh key generation is <strong>irrelevant</strong> to the github account. (In fact, as per this <a class="link" href="https://askubuntu.com/questions/801997/purpose-of-email-at-the-end-of-ssh-public-key"  target="_blank" rel="noopener"
-    >source</a>, email is just a comment?)</p>
+    <h2 id="commit-convention">Commit Convention</h2>
+<h3 id="overview">Overview</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;type&gt;[optional scope]: &lt;description&gt;
+</span></span><span class="line"><span class="cl">[blank]
+</span></span><span class="line"><span class="cl">[optional body]
+</span></span><span class="line"><span class="cl">[blank]
+</span></span><span class="line"><span class="cl">[optional footer(s)]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="type">Type</h3>
+<ul>
+<li><code>fix</code> : bug fix</li>
+<li><code>feat</code> : new feature</li>
+<li>etc
+<ul>
+<li><code>build</code> : changes that affect build system/external dependencies</li>
+<li><code>chore</code> : updating grunt tasks (no production code change)</li>
+<li><code>ci</code> : changes to CI configuration</li>
+<li><code>style</code> : changes to the code style only (white-space, format, semic-colons, etc)</li>
+<li><code>refactor</code> : not <code>fix</code> nor <code>feat</code></li>
+<li><code>perf</code> : improves performance</li>
+<li><code>test</code> : adding/correcting tests</li>
+<li><code>docs</code> : documentation change</li>
+</ul>
+</li>
+<li><code>!</code> after <code>type</code> / <code>scope</code>
+<ul>
+<li>draws attention (obviously)</li>
+</ul>
+</li>
+</ul>
+<h3 id="footer">Footer</h3>
+<ul>
+<li><code>BREAKING CHANGE</code>
+<ul>
+<li>breaking API change</li>
+<li>for any <code>type</code>/<code>scope</code></li>
+</ul>
+</li>
+<li><code>Signed-off-by</code></li>
+<li><code>Reviewed-by</code></li>
+<li><code>Helped-by</code></li>
+<li><code>Reference-to</code></li>
+<li><code>See-also</code></li>
+</ul>
+<h3 id="examples">Examples</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ssh-keygen -t rsa -b 4096 -C &#34;your_email@example.com&#34;
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">fix: updated so that the API only takes valid uris
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>When prompted: <code>Enter file in which to save the key</code>, make sure to modify the name for each account (e.g. id_rsa_kaeun).</p>
-<h1 id="add-ssh-key-to-github-account">Add SSH key to Github Account</h1>
-<p>Go to <code>Settings/SSH and GPG Keys</code> in your Github Account and add copy and paste the output of the following command.</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat ~/.ssh/&lt;ssh-key file name&gt;.pub
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h1 id="modify-sshconfig">Modify ~/.ssh/config</h1>
-<p>Add the following to your <code>~/.ssh/config</code> file.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#user1 account</span>
-</span></span><span class="line"><span class="cl">Host github.com-user1
-</span></span><span class="line"><span class="cl">   HostName github.com
-</span></span><span class="line"><span class="cl">   User git
-</span></span><span class="line"><span class="cl">   IdentityFile ~/.ssh/github-user1
-</span></span><span class="line"><span class="cl">   IdentitiesOnly yes
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">feat!: constantly checks for new ground truth dataset in the DB and trains the model
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">#user2 account</span>
-</span></span><span class="line"><span class="cl">Host github.com-user2
-</span></span><span class="line"><span class="cl">   HostName github.com
-</span></span><span class="line"><span class="cl">   User git
-</span></span><span class="line"><span class="cl">   IdentityFile ~/.ssh/github-user2
-</span></span><span class="line"><span class="cl">   IdentitiesOnly yes
+</span></span><span class="line"><span class="cl">BREAKING CHANGE: airflow DAG created to run this feature weekly
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Reviewed by: Kaeun Kim
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="ssh-agent">SSH agent</h1>
+</div><h2 id="branch-conventions">Branch Conventions</h2>
+<h3 id="main-branches">Main Branches</h3>
+<ul>
+<li><code>master</code> : production-ready</li>
+<li><code>develop</code> : latest development</li>
+</ul>
+<h3 id="supporting-branches">Supporting Branches</h3>
+<ul>
+<li><code>feature</code>
+<ul>
+<li><strong>branch off</strong> from <code>develop</code> when <!-- raw HTML omitted -->developing new features <!-- raw HTML omitted --></li>
+<li><strong>merge</strong> back to <code>develop</code> to add the new feature in the new release</li>
+<li>Naming convention: anything other than other branches convention</li>
+</ul>
+</li>
+<li><code>release</code>
+<ul>
+<li><strong>branch off</strong> from <code>develop</code> when <code>develop</code> (almost) reflects the desired state of the new release</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git checkout -b release-1.1 develop
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>merge</strong> back to &hellip;</li>
+<li><code>master</code> when it is ready to become a real release</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git checkout master
+</span></span><span class="line"><span class="cl">git merge --no-f release-1.1
+</span></span><span class="line"><span class="cl">git tag -a 1.1<span class="sb">```</span>
+</span></span><span class="line"><span class="cl"> - <span class="sb">`</span>develop<span class="sb">`</span> <span class="k">for</span> further development of the next release
+</span></span><span class="line"><span class="cl"><span class="sb">```</span>bash
+</span></span><span class="line"><span class="cl">git checkout develop
+</span></span><span class="line"><span class="cl">git merge --no-f release-1.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Naming convention: <code>release-**</code></li>
+</ul>
+</li>
+<li><code>hotfix</code>
+<ul>
+<li><strong>branch off</strong> from <code>master</code> when it is necessary to act <!-- raw HTML omitted -->immediately<!-- raw HTML omitted --> upon an undesired state of a <!-- raw HTML omitted -->live<!-- raw HTML omitted --> production version</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git checkout -b hotfix-1.0.1 master
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>merge</strong> back to &hellip;</li>
+<li><code>master</code> when the bug fix is done</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -396,36 +475,37 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># ssh-add &lt;IdentityFile&gt;</span>
-</span></span><span class="line"><span class="cl">ssh-add **~/.ssh/<span class="si">${</span><span class="nv">name</span><span class="p"> of ssh key file</span><span class="si">}</span>**
-</span></span><span class="line"><span class="cl"><span class="c1"># Use **eval &#34;$(ssh-agent -s)&#34;** if necessary</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git checkout master
+</span></span><span class="line"><span class="cl">git merge --no-ff hotfix-1.0.1
+</span></span><span class="line"><span class="cl">git tag -a 1.0.1
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="clone">Clone</h1>
-<p>When cloning repositories run the following command.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone git@<span class="si">${</span><span class="nv">Host</span><span class="si">}</span>:<span class="si">${</span><span class="nv">user_name</span><span class="si">}</span>/<span class="si">${</span><span class="nv">your</span><span class="p">-repo-name</span><span class="si">}</span>.git
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h1 id="delete-recently-pushed-commit">Delete recently pushed commit</h1>
+</div><ul>
+<li><code>develop</code> to safeguard the bug fix for the next release</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git reset HEAD^
-</span></span><span class="line"><span class="cl">git push -f origin <span class="si">${</span><span class="nv">branch_name</span><span class="si">}</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git checkout develop
+</span></span><span class="line"><span class="cl">git merge --no-f release-1.1
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="references">References</h1>
+</div><ul>
+<li>Naming convention: <code>hotfix-**</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="references">References</h2>
 <ul>
-<li><a class="link" href="https://gist.github.com/Jonalogy/54091c98946cfe4f8cdab2bea79430f9"  target="_blank" rel="noopener"
-    >https://gist.github.com/Jonalogy/54091c98946cfe4f8cdab2bea79430f9</a></li>
+<li><a class="link" href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type"  target="_blank" rel="noopener"
+    >https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type</a></li>
+<li><a class="link" href="https://www.conventionalcommits.org/en/v1.0.0/"  target="_blank" rel="noopener"
+    >https://www.conventionalcommits.org/en/v1.0.0/</a></li>
+<li><a class="link" href="https://nvie.com/posts/a-successful-git-branching-model/"  target="_blank" rel="noopener"
+    >https://nvie.com/posts/a-successful-git-branching-model/</a></li>
 </ul>
 
 </section>
@@ -468,13 +548,24 @@
         <div class="flex article-list--tile">
             
                 
-<article class="">
-    <a href="/p/git-conventions/">
+<article class="has-image">
+    <a href="/p/github-ssh-set-up/">
         
+        
+            <div class="article-image">
+                <img src="/p/github-ssh-set-up/GitHub-Mark.bb04d77a846e6beca811c4be1d8e3442_hu9d76232819f01fb0167220a8ea045d21_7249_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Github Ssh Set Up"
+                        
+                        data-hash="md5-uwTXeoRua&#43;yoEcS&#43;HY40Qg==">
+                
+            </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Git Conventions</h2>
+            <h2 class="article-title">Github Ssh Set Up</h2>
         </div>
     </a>
 </article>

@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Kaeun Kim</copyright>
-        <lastBuildDate>Thu, 30 Nov 2023 10:12:24 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 04 Dec 2023 00:08:07 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Notes</title>
+        <link>https://k223kim.github.io/categories/notes/</link>
+        <pubDate>Mon, 04 Dec 2023 00:08:07 +0900</pubDate>
+        
+        <guid>https://k223kim.github.io/categories/notes/</guid>
+        <description>&lt;img src="https://k223kim.github.io/categories/notes/urbanbrush-20190509114253808633.png" alt="Featured image of post Notes" /&gt;</description>
+        </item>
+        <item>
         <title>DB</title>
         <link>https://k223kim.github.io/categories/db/</link>
         <pubDate>Thu, 30 Nov 2023 10:12:24 +0900</pubDate>
@@ -22,14 +30,6 @@
         
         <guid>https://k223kim.github.io/categories/dl/</guid>
         <description>&lt;img src="https://k223kim.github.io/categories/dl/dl.png" alt="Featured image of post DL" /&gt;</description>
-        </item>
-        <item>
-        <title>Notes</title>
-        <link>https://k223kim.github.io/categories/notes/</link>
-        <pubDate>Wed, 25 Oct 2023 23:42:52 +0900</pubDate>
-        
-        <guid>https://k223kim.github.io/categories/notes/</guid>
-        <description>&lt;img src="https://k223kim.github.io/categories/notes/urbanbrush-20190509114253808633.png" alt="Featured image of post Notes" /&gt;</description>
         </item>
         
     </channel>

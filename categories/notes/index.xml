@@ -7,7 +7,204 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Kaeun Kim</copyright>
-        <lastBuildDate>Wed, 25 Oct 2023 23:42:52 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 04 Dec 2023 00:08:07 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Git Conventions</title>
+        <link>https://k223kim.github.io/p/git-conventions/</link>
+        <pubDate>Mon, 04 Dec 2023 00:08:07 +0900</pubDate>
+        
+        <guid>https://k223kim.github.io/p/git-conventions/</guid>
+        <description>&lt;h2 id=&#34;commit-convention&#34;&gt;Commit Convention&lt;/h2&gt;
+&lt;h3 id=&#34;overview&#34;&gt;Overview&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;lt;type&amp;gt;[optional scope]: &amp;lt;description&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[blank]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[optional body]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[blank]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[optional footer(s)]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;type&#34;&gt;Type&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fix&lt;/code&gt; : bug fix&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;feat&lt;/code&gt; : new feature&lt;/li&gt;
+&lt;li&gt;etc
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;build&lt;/code&gt; : changes that affect build system/external dependencies&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;chore&lt;/code&gt; : updating grunt tasks (no production code change)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ci&lt;/code&gt; : changes to CI configuration&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;style&lt;/code&gt; : changes to the code style only (white-space, format, semic-colons, etc)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;refactor&lt;/code&gt; : not &lt;code&gt;fix&lt;/code&gt; nor &lt;code&gt;feat&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;perf&lt;/code&gt; : improves performance&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;test&lt;/code&gt; : adding/correcting tests&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;docs&lt;/code&gt; : documentation change&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;!&lt;/code&gt; after &lt;code&gt;type&lt;/code&gt; / &lt;code&gt;scope&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;draws attention (obviously)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;footer&#34;&gt;Footer&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;BREAKING CHANGE&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;breaking API change&lt;/li&gt;
+&lt;li&gt;for any &lt;code&gt;type&lt;/code&gt;/&lt;code&gt;scope&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Signed-off-by&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Reviewed-by&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Helped-by&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Reference-to&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;See-also&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fix: updated so that the API only takes valid uris
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;feat!: constantly checks for new ground truth dataset in the DB and trains the model
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;BREAKING CHANGE: airflow DAG created to run this feature weekly
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Reviewed by: Kaeun Kim
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;branch-conventions&#34;&gt;Branch Conventions&lt;/h2&gt;
+&lt;h3 id=&#34;main-branches&#34;&gt;Main Branches&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;master&lt;/code&gt; : production-ready&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;develop&lt;/code&gt; : latest development&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;supporting-branches&#34;&gt;Supporting Branches&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;feature&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;branch off&lt;/strong&gt; from &lt;code&gt;develop&lt;/code&gt; when &lt;!-- raw HTML omitted --&gt;developing new features &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;merge&lt;/strong&gt; back to &lt;code&gt;develop&lt;/code&gt; to add the new feature in the new release&lt;/li&gt;
+&lt;li&gt;Naming convention: anything other than other branches convention&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;release&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;branch off&lt;/strong&gt; from &lt;code&gt;develop&lt;/code&gt; when &lt;code&gt;develop&lt;/code&gt; (almost) reflects the desired state of the new release&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git checkout -b release-1.1 develop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;merge&lt;/strong&gt; back to &amp;hellip;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;master&lt;/code&gt; when it is ready to become a real release&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git checkout master
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git merge --no-f release-1.1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git tag -a 1.1&lt;span class=&#34;sb&#34;&gt;```&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; - &lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;develop&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; further development of the next release
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;sb&#34;&gt;```&lt;/span&gt;bash
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git checkout develop
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git merge --no-f release-1.1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Naming convention: &lt;code&gt;release-**&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hotfix&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;branch off&lt;/strong&gt; from &lt;code&gt;master&lt;/code&gt; when it is necessary to act &lt;!-- raw HTML omitted --&gt;immediately&lt;!-- raw HTML omitted --&gt; upon an undesired state of a &lt;!-- raw HTML omitted --&gt;live&lt;!-- raw HTML omitted --&gt; production version&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git checkout -b hotfix-1.0.1 master
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;merge&lt;/strong&gt; back to &amp;hellip;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;master&lt;/code&gt; when the bug fix is done&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git checkout master
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git merge --no-ff hotfix-1.0.1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git tag -a 1.0.1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;develop&lt;/code&gt; to safeguard the bug fix for the next release&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git checkout develop
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git merge --no-f release-1.1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Naming convention: &lt;code&gt;hotfix-**&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.conventionalcommits.org/en/v1.0.0/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.conventionalcommits.org/en/v1.0.0/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://nvie.com/posts/a-successful-git-branching-model/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://nvie.com/posts/a-successful-git-branching-model/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Linux Commands</title>
         <link>https://k223kim.github.io/p/linux-commands/</link>
         <pubDate>Wed, 25 Oct 2023 23:42:52 +0900</pubDate>
