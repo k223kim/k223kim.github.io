@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NestJS Controller explanation with example code'>
+<title>Nestjs Controllers</title>
+
+<link rel='canonical' href='https://k223kim.github.io/p/nestjs-controllers/'>
+
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Nestjs Controllers'>
+<meta property='og:description' content='NestJS Controller explanation with example code'>
+<meta property='og:url' content='https://k223kim.github.io/p/nestjs-controllers/'>
+<meta property='og:site_name' content='Kaeun Kim'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-02-19T18:32:43&#43;09:00'/><meta property='article:modified_time' content='2024-02-19T18:32:43&#43;09:00'/>
+<meta name="twitter:title" content="Nestjs Controllers">
+<meta name="twitter:description" content="NestJS Controller explanation with example code">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu35105720d296b099384c21e1bd4580a7_474561_300x0_resize_box_3.png" width="300"
+                            height="317" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🙌</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Kaeun Kim</a></h1>
+            <h2 class="site-description">Hello World!</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/k223kim'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Library</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://k223kim.github.io/" selected>English</option>
+                        
+                            <option value="https://k223kim.github.io/ko/" >한국어</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/nestjs/" style="background-color: #FF4760; color: #fff;">
+                NestJS
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/nestjs-controllers/">Nestjs Controllers</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            NestJS Controller explanation with example code
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Feb 19, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="disclaimer">Disclaimer</h2>
+<ul>
+<li>These examples are based on the <a class="link" href="https://docs.nestjs.com/controllers"  target="_blank" rel="noopener"
+    >nestjs document</a></li>
+</ul>
+<h2 id="basic-setting">Basic Setting</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nest new controller_practice
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>This will set up a new nest project with corresponding boilerplate code</li>
+<li>I have selected <strong>npm</strong> for the package manager</li>
+<li>running <code>npm run start:dev</code> will start the server on the <strong>localhost</strong></li>
+<li>when accessing <code>http://localhost:3000</code>, you&rsquo;ll see</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Hello World!
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="controllers">Controllers</h2>
+<ul>
+<li>receive specific requests for the application</li>
+</ul>
+<h5 id="routing">routing</h5>
+<ul>
+<li>controls which controller receives which request</li>
+<li>each controller has more than one route</li>
+<li>different routes can perform different actions</li>
+</ul>
+<h4 id="nest-g-resource-name"><code>nest g resource [name]</code></h4>
+<ul>
+<li>create a CRUD resource
+<ul>
+<li>generates NestJS building blocks (modules, service, controller classes), entity class, DTO classes, testing (<code>.spec</code>) files</li>
+</ul>
+</li>
+<li>For our example, run <code>nest g resource cats</code></li>
+</ul>
+<h4 id="controller"><code>@Controller()</code></h4>
+<ul>
+<li>Required to define a basic controller</li>
+<li>can assign an optional <strong>route path</strong> prefix</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Controller</span><span class="p">(</span><span class="s1">&#39;cats&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>notice that when doing <code>nest g resource cats</code>, it creates <code>src/cats/cats.controller.ts</code> that has a prefix <strong>cats</strong></li>
+<li><code>curl http://localhost:3000/cats</code> will call the <code>GET</code> method and call <code>findAll()</code> which will output <code>This action returns all cats</code></li>
+</ul>
+<h4 id="get"><code>@Get()</code></h4>
+<ul>
+<li>HTTP request method decorator</li>
+<li>this defines an endpoint to fetch resources</li>
+<li>Nest creates a <strong>handler</strong> for a specific <strong>endpoint</strong> for HTTP requests
+<ul>
+<li>endpoint
+<ul>
+<li>HTTP request method &amp; route path</li>
+</ul>
+</li>
+<li>route path
+<ul>
+<li>prefix declared by the controller + path specified in the method&rsquo;s decorator</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Controller</span><span class="p">(</span><span class="s1">&#39;cats&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">class</span> <span class="nx">CatsController</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">@Get</span><span class="p">(</span><span class="s1">&#39;breed&#39;</span><span class="p">)</span> <span class="c1">//HTTP request method (GET) is made to this endpoint
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//route path: http://localhost:3000/cats/breed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">findAll</span><span class="p">()</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s1">&#39;This action returns all cats&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Nest will map &#39;GET /cats/breed&#39; to this handler
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Nest routes the request (GET) to <code>findAll()</code></li>
+<li>the function name (<code>findAll()</code>)  does not matter!</li>
+</ul>
+<h4 id="req"><code>@Req</code></h4>
+<ul>
+<li><strong>Request</strong> object (HTTP request)</li>
+<li>Access to the request object</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">Req</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@nestjs/common&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Request</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;express&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">@Get</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nx">findAll</span><span class="p">(</span><span class="kd">@Req</span><span class="p">()</span> <span class="nx">request</span>: <span class="kt">Request</span><span class="p">)</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="s1">&#39;This action returns all cats&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="post"><code>@Post()</code></h4>
+<ul>
+<li>endpoint that creates new records</li>
+<li>it is called a &lsquo;Post handler&rsquo;</li>
+</ul>
+<h4 id="route-wildcards">Route wildcards</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Get</span><span class="p">(</span><span class="s1">&#39;ab*cd&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//matches abcd, ab_cd, abecd, etc
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">findAll</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="s1">&#39;This route uses a wildcard&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="httpcode204"><code>@HttpCode(204)</code></h4>
+<ul>
+<li>Response status code is <strong>200</strong> by default
+<ul>
+<li><strong>POST requests</strong> are <strong>201</strong></li>
+</ul>
+</li>
+<li>Can change the behavior</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">HttpCode</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@nestjs/common&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">@Post</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="kd">@HttpCode</span><span class="p">(</span><span class="mi">204</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">create</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="s1">&#39;This action adds a new cat&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="header"><code>@Header()</code></h4>
+<ul>
+<li>specify custom response header</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">Header</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@nestjs/common&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">@Post</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="kd">@Header</span><span class="p">(</span><span class="s1">&#39;Cache-Control&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">create</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="s1">&#39;This action adds a new cat&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// this addes &#39;Cache-Control: none&#39; to the Header
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>this can be confirmed by the following</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -X POST http://localhost:3000/cats -v
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>this shows the newly added response header</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">*   Trying 127.0.0.1:3000...
+</span></span><span class="line"><span class="cl">* Connected to localhost (127.0.0.1) port 3000 (#0)
+</span></span><span class="line"><span class="cl">&gt; POST /cats HTTP/1.1
+</span></span><span class="line"><span class="cl">&gt; Host: localhost:3000
+</span></span><span class="line"><span class="cl">&gt; User-Agent: curl/7.86.0
+</span></span><span class="line"><span class="cl">&gt; Accept: */*
+</span></span><span class="line"><span class="cl">&gt;
+</span></span><span class="line"><span class="cl">* Mark bundle as not supporting multiuse
+</span></span><span class="line"><span class="cl">&lt; HTTP/1.1 201 Created
+</span></span><span class="line"><span class="cl">&lt; X-Powered-By: Express
+</span></span><span class="line"><span class="cl">&lt; Cache-Control: none
+</span></span><span class="line"><span class="cl">&lt; Content-Type: text/html; charset=utf-8
+</span></span><span class="line"><span class="cl">&lt; Content-Length: 26
+</span></span><span class="line"><span class="cl">&lt; ETag: W/&#34;1a-2akZlhd5h5eyBoEmpkMg7vz8ALY&#34;
+</span></span><span class="line"><span class="cl">&lt; Date: Mon, 19 Feb 2024 08:38:27 GMT
+</span></span><span class="line"><span class="cl">&lt; Connection: keep-alive
+</span></span><span class="line"><span class="cl">&lt; Keep-Alive: timeout=5
+</span></span><span class="line"><span class="cl">&lt;
+</span></span><span class="line"><span class="cl">* Connection #0 to host localhost left intact
+</span></span><span class="line"><span class="cl">This action adds a new cat%
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="redirecturl-status-code"><code>@Redirect(url, status code)</code></h4>
+<ul>
+<li>redirect can be <strong>overwritten</strong> by the returned url</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Get</span><span class="p">(</span><span class="s1">&#39;docs&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">@Redirect</span><span class="p">(</span><span class="s1">&#39;https://docs.nestjs.com&#39;</span><span class="p">,</span> <span class="mi">302</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//accessing localhost:3000/cats/docs/ will redirect to
+</span></span></span><span class="line"><span class="cl"><span class="c1">//https://docs.nestjs.com
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">getDocs</span><span class="p">(</span><span class="kd">@Query</span><span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">)</span> <span class="nx">version</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="nx">version</span> <span class="o">&amp;&amp;</span> <span class="nx">version</span> <span class="o">===</span> <span class="s1">&#39;5&#39;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="p">{</span><span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;https://docs.nestjs.com/v5/&#39;</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//accessing localhost:3000/cats/docs?version=5 will redirec to
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">//https://docs.nest.js.com/v5/
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>notice that the returned values will <strong>override</strong> any arguments passed to <strong>@Redirect()</strong></li>
+</ul>
+<h4 id="route-parameters-getvar-paramvar">Route parameters (`@Get(&rsquo;:var&rsquo;), @Param(&lsquo;var&rsquo;)</h4>
+<ul>
+<li>can capture dynamic value in the request URL</li>
+<li>route parameters declared in <code>@Get()</code> can be accessed with <code>@Param()</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Get</span><span class="p">(</span><span class="s1">&#39;:id&#39;</span><span class="p">)</span><span class="c1">//dynamic token &#39;id&#39; declared
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">findOne</span><span class="p">(</span><span class="kd">@Param</span><span class="p">()</span> <span class="nx">params</span>: <span class="kt">any</span><span class="p">)</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="sb">`This action returns a #</span><span class="si">${</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb"> cat`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//OR
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">findOne</span><span class="p">(</span><span class="kd">@Param</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="nx">params</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">params</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="sb">`The action returns a #</span><span class="si">${</span><span class="nx">params</span><span class="si">}</span><span class="sb"> cat`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>example with multiple route parameters</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Get</span><span class="p">(</span><span class="s1">&#39;:id/:number&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">findOne</span><span class="p">(</span><span class="kd">@Param</span><span class="p">()</span> <span class="nx">params</span>: <span class="kt">any</span><span class="p">)</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">params</span><span class="p">.</span><span class="kt">number</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="sb">`This action returns </span><span class="si">${</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb"> and </span><span class="si">${</span><span class="nx">params</span><span class="p">.</span><span class="kt">number</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// we can access this by http://localhost:3000/cats/2/100
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>but a better practice is to declare each param independently with its corresponding type</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Get</span><span class="p">(</span><span class="s1">&#39;:id/:number&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">findOne</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">@Param</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="nx">id</span>: <span class="kt">string</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">@Param</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">)</span> <span class="kt">number</span><span class="o">:</span> <span class="kt">string</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="sb">`id: </span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">, number: </span><span class="si">${</span><span class="kt">number</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// curl http://localhost:3000/cats/1/100
+</span></span></span><span class="line"><span class="cl"><span class="c1">// results in
+</span></span></span><span class="line"><span class="cl"><span class="c1">// id: 1, number: 100
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="sub-domain-routing-controllerhost-hostparam">Sub-Domain Routing (<code>@Controller({host:}</code>, <code>@HostParam</code>)</h4>
+<ul>
+<li>let us create another controller by using <code>nest g co CatID</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//default controller
+</span></span></span><span class="line"><span class="cl"><span class="c1">//src/app.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Controller</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">class</span> <span class="nx">AppController</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kr">constructor</span><span class="p">(</span><span class="kr">private</span> <span class="kr">readonly</span> <span class="nx">appService</span>: <span class="kt">AppService</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kd">@Get</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">getHello</span><span class="p">()</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s1">&#39;Hello World!&#39;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">// src/cat-id/cat-id.controller.ts (created by nest g co id)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">Controller</span><span class="p">,</span> <span class="nx">HostParam</span><span class="p">,</span> <span class="nx">Get</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@nestjs/common&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">@Controller</span><span class="p">({</span><span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;:id.api.localhost&#39;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">class</span> <span class="nx">CatIdController</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">@Get</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">index</span><span class="p">(</span><span class="kd">@HostParam</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="nx">id</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sb">`this is sub routing to </span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Notice how <code>CatIdController</code> has a <strong>endpoint</strong> that is the root route (<code>localhost:3000</code>). Also, notice how <code>AppController</code> also has a <strong>endpoint</strong> that is a root route (<code>localhost:3000</code>)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/app.module.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Module</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">controllers</span><span class="o">:</span> <span class="p">[</span><span class="nx">AppController</span><span class="p">,</span> <span class="nx">CatIdController</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>since the <code>app.module.ts</code> has <code>AppController</code> first, that means that when having the same <strong>endpoint</strong>, the following will result in the same output (<code>Hello World!</code>)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl http://localhost:3000 <span class="c1"># Hello World!</span>
+</span></span><span class="line"><span class="cl">curl http://kaeun.api.localhost:3000 <span class="c1"># Hello World!</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>if we modify the <code>app.module.ts</code> as so, when having the same endpoint, <code>CatIdController</code> will be processed first</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/app.module.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Module</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">controllers</span><span class="o">:</span> <span class="p">[</span><span class="nx">CatIdController</span><span class="p">,</span> <span class="nx">AppController</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>This means the following</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl http://kaeun.api.localhost:3000 <span class="c1"># this is sub routing to kaeun</span>
+</span></span><span class="line"><span class="cl">curl http://localhost:3000 <span class="c1"># Hello World!</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Note
+<ul>
+<li>When requesting to a <strong>host</strong> that is not in the <code>host</code> parameter, (e.g. <code>http://kaeun.localhost:3000</code>, this request is being requested to the original domain (i.e. <code>http://localhost:3000</code>)</li>
+</ul>
+</li>
+</ul>
+<h4 id="dto-data-transfer-object">DTO (Data Transfer Object)</h4>
+<ul>
+<li>object that defines how the data will be sent over the network</li>
+<li>recommended to define DTO schema using <strong>Typescript classes</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/dto/create-cat.dto.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="kr">class</span> <span class="nx">CreateIDDto</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">name</span>: <span class="kt">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">id</span>: <span class="kt">number</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="request-payloads">Request Payloads</h4>
+<ul>
+<li><code>@Body()</code> can be used for the <strong>POST</strong> route handler to accept client parameters</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">CreateCatDto</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./dto/create-cat.dto&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">@Post</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nx">create</span><span class="p">(</span><span class="kd">@Body</span><span class="p">()</span> <span class="nx">createCatDto</span>: <span class="kt">CreateCatDto</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">{</span><span class="nx">name</span><span class="p">,</span> <span class="nx">id</span><span class="p">}</span> <span class="o">=</span> <span class="nx">createCatDto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="sb">`This action adds a cat with name: </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> and id: </span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">!`</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>This results in</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -X POST http://localhost:3000/cats -H <span class="s2">&#34;Content-Type: application/json&#34;</span> -d <span class="s1">&#39;{&#34;name&#34;: &#34;Kaeun&#34;, &#34;id&#34;: 97}&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># This action adds a cat with name: Kaeun and id: 97!</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>DTO can also be used to retrieve information from a <strong>GET</strong> request
+<ul>
+<li>Consider a case where we pass in <code>GET http://localhost:3000/users?offset=0&amp;limit=10</code></li>
+<li>To use these input options in the <strong>GET</strong> request, we can do the following</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">// src/cats/dto/create-cat.dto.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="kr">class</span> <span class="nx">GetCatDto</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">offset</span>: <span class="kt">number</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">limit</span>: <span class="kt">number</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/cats.controller.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">GetCatDto</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./dto/create-cat.dto&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Query</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@nestjs/common&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">@Get</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nx">getDto</span><span class="p">(</span><span class="kd">@Query</span><span class="p">()</span> <span class="nx">info</span>: <span class="kt">GetCatDto</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">{</span><span class="nx">offset</span><span class="p">,</span> <span class="nx">limit</span><span class="p">}</span> <span class="o">=</span> <span class="nx">info</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="sb">`got offset: </span><span class="si">${</span><span class="nx">offset</span><span class="si">}</span><span class="sb">, limit: </span><span class="si">${</span><span class="nx">limit</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>This results in <code>curl http://localhost:3000/cats?limit=10&amp;offset=10</code>, we get the following output</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl http://localhost:3000/cats?limit<span class="o">=</span>10<span class="p">&amp;</span><span class="nv">offset</span><span class="o">=</span><span class="m">10</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># got offset: 10, limit: 10</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="controller-and-module">Controller and Module</h4>
+<ul>
+<li>controllers always belong to a module</li>
+<li>controller must be included within the <code>@Module()</code> decorator for Nest to know that it exists (it will then create an instance of this controller class)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/app.module.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">@Module</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">controllers</span><span class="o">:</span> <span class="p">[</span><span class="nx">CatIdController</span><span class="p">,</span> <span class="nx">AppController</span><span class="p">],</span><span class="c1">//add controller here
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="k223kim/k223kim_blog_comments"
+        issue-term="title"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 Kaeun Kim
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
