@@ -798,25 +798,35 @@
 </div>
 </div><h4 id="provider-with-inheritance---class-constructor">Provider with Inheritance - Class Constructor</h4>
 <ul>
-<li>Consider the following services by creating three more <code>.ts</code> files (<code>serviceA.ts</code>, <code>serviceB.ts</code>, and <code>baseService.ts</code>)
+<li>Consider the following services by creating three more <code>.ts</code> files (<code>serviceA.ts</code>, <code>serviceB.ts</code>, and <code>baseService.ts</code>)</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/serviceA.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">Injectable</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;@nestjs/common&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">@Injectable</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// we need this decorator because this is used in BaseService
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="kr">class</span> <span class="nx">ServiceA</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">getCat</span><span class="p">()</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s1">&#39;Hello from Cat A!&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-<p>//src/cats/serviceA.ts
-import { Injectable } from &ldquo;@nestjs/common&rdquo;;</p>
-<p>@Injectable()
-// we need this decorator because this is used in BaseService
-export class ServiceA{
-getCat(): string{
-return &lsquo;Hello from Cat A!&rsquo;;
-}
-}</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -831,23 +841,19 @@ return &lsquo;Hello from Cat A!&rsquo;;
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="err">```</span><span class="n">ts</span>
-</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="n">src</span><span class="o">/</span><span class="n">cats</span><span class="o">/</span><span class="n">baseService</span><span class="o">.</span><span class="n">ts</span>
-</span></span><span class="line"><span class="cl"><span class="n">import</span> <span class="p">{</span> <span class="n">ServiceA</span> <span class="p">}</span> <span class="n">from</span> <span class="s2">&#34;./serviceA&#34;</span><span class="p">;</span>
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="c1">//src/cats/baseService.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">ServiceA</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;./serviceA&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="k">class</span> <span class="n">BaseService</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">constructor</span><span class="p">(</span><span class="n">private</span> <span class="n">readonly</span> <span class="n">serviceA</span><span class="p">:</span> <span class="n">ServiceA</span><span class="p">){}</span>
-</span></span><span class="line"><span class="cl">	<span class="n">getCat</span><span class="p">():</span> <span class="n">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">class</span> <span class="nx">BaseService</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kr">constructor</span><span class="p">(</span><span class="kr">private</span> <span class="kr">readonly</span> <span class="nx">serviceA</span>: <span class="kt">ServiceA</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">getCat</span><span class="p">()</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s1">&#39;Hello from Base Cat!&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">runServiceA</span><span class="p">():</span> <span class="n">string</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">this</span><span class="o">.</span><span class="n">serviceA</span><span class="o">.</span><span class="n">getCat</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">runServiceA</span><span class="p">()</span><span class="o">:</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">serviceA</span><span class="p">.</span><span class="nx">getCat</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
