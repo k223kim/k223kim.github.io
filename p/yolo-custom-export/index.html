@@ -669,14 +669,18 @@ Don&rsquo;t forget to update the <code>save</code> attribute as well.</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>When performing a default export, the model looks something like this:
-<img src="/yolo_tflite1.png"
-	
-	
-	
+<img src="/p/yolo-custom-export/yolo_tflite1.png"
+	width="820"
+	height="990"
+	srcset="/p/yolo-custom-export/yolo_tflite1_hu716f4ea7aa0d7e8b4030eddba169af62_72894_480x0_resize_box_3.png 480w, /p/yolo-custom-export/yolo_tflite1_hu716f4ea7aa0d7e8b4030eddba169af62_72894_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="yolo_tflite1.png"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="82"
+		data-flex-basis="198px"
 	
 ></p>
 <h4 id="modified-export">Modified Export</h4>
@@ -689,14 +693,18 @@ Don&rsquo;t forget to update the <code>save</code> attribute as well.</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>With the new module inserted and assigning a specific input tensor shape while exporting, the YOLO architecture is modified as shown below.
-<img src="/yolo_tflite2.png"
-	
-	
-	
+<img src="/p/yolo-custom-export/yolo_tflite2.png"
+	width="514"
+	height="1100"
+	srcset="/p/yolo-custom-export/yolo_tflite2_hu160de71a19b3350c1149cc3f7b3c6524_70410_480x0_resize_box_3.png 480w, /p/yolo-custom-export/yolo_tflite2_hu160de71a19b3350c1149cc3f7b3c6524_70410_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="yolo_tflite2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="46"
+		data-flex-basis="112px"
 	
 >
 Notice how the input shape is now converted to <code>1x1280x1280x3</code> and there are two &ldquo;blocks&rdquo; that are added that normalizes and reshapes the tensor to <code>1x640x640x3</code>. The rest of the model architecture is identical.</p>
