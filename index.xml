@@ -387,8 +387,8 @@ Don&amp;rsquo;t forget to update the &lt;code&gt;save&lt;/code&gt; attribute as 
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;yolo_model_new&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;tflite&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;imgsz&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1280&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1280&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;With the new module inserted and assigning a specific input tensor shape while exporting, the YOLO architecture is modified as shown below.
-&lt;img src=&#34;https://k223kim.github.io/p/yolo-custom-export/yolo_tflite2.png&#34;
+&lt;/div&gt;&lt;p&gt;With the new module inserted and assigning a specific input tensor shape while exporting, the YOLO architecture is modified as shown below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://k223kim.github.io/p/yolo-custom-export/yolo_tflite2.png&#34;
 	width=&#34;514&#34;
 	height=&#34;1100&#34;
 	srcset=&#34;https://k223kim.github.io/p/yolo-custom-export/yolo_tflite2_hu160de71a19b3350c1149cc3f7b3c6524_70410_480x0_resize_box_3.png 480w, https://k223kim.github.io/p/yolo-custom-export/yolo_tflite2_hu160de71a19b3350c1149cc3f7b3c6524_70410_1024x0_resize_box_3.png 1024w&#34;
