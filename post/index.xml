@@ -401,8 +401,8 @@ Don&amp;rsquo;t forget to update the &lt;code&gt;save&lt;/code&gt; attribute as 
 		data-flex-grow=&#34;46&#34;
 		data-flex-basis=&#34;112px&#34;
 	
-&gt;
-Notice how the input shape is now converted to &lt;code&gt;1x1280x1280x3&lt;/code&gt; and there are two &amp;ldquo;blocks&amp;rdquo; that are added that normalizes and reshapes the tensor to &lt;code&gt;1x640x640x3&lt;/code&gt;. The rest of the model architecture is identical.&lt;/p&gt;
+&gt;&lt;/p&gt;
+&lt;p&gt;Notice how the input shape is now converted to &lt;code&gt;1x1280x1280x3&lt;/code&gt; and there are two &amp;ldquo;blocks&amp;rdquo; that are added that normalizes and reshapes the tensor to &lt;code&gt;1x640x640x3&lt;/code&gt;. The rest of the model architecture is identical.&lt;/p&gt;
 &lt;h2 id=&#34;inference-tflite-model&#34;&gt;Inference TFLite Model&lt;/h2&gt;
 &lt;p&gt;Let us confirm that this modification has been done correctly by running an inference on the TFLite model. Below are the code to run a the TFLite model on a single image.&lt;/p&gt;
 &lt;h4 id=&#34;set-up-tensorflow-lite-interpreter-interface&#34;&gt;Set up TensorFlow Lite Interpreter Interface&lt;/h4&gt;
