@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Kaeun Kim</copyright>
-        <lastBuildDate>Thu, 22 Feb 2024 09:19:57 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 19 Mar 2024 15:43:57 +0900</lastBuildDate><atom:link href="https://k223kim.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>DL</title>
+        <link>https://k223kim.github.io/categories/dl/</link>
+        <pubDate>Tue, 19 Mar 2024 15:43:57 +0900</pubDate>
+        
+        <guid>https://k223kim.github.io/categories/dl/</guid>
+        <description>&lt;img src="https://k223kim.github.io/categories/dl/dl.png" alt="Featured image of post DL" /&gt;</description>
+        </item>
+        <item>
         <title>NestJS</title>
         <link>https://k223kim.github.io/categories/nestjs/</link>
         <pubDate>Thu, 22 Feb 2024 09:19:57 +0900</pubDate>
@@ -38,14 +46,6 @@
         
         <guid>https://k223kim.github.io/categories/db/</guid>
         <description>&lt;img src="https://k223kim.github.io/categories/db/db.png" alt="Featured image of post DB" /&gt;</description>
-        </item>
-        <item>
-        <title>DL</title>
-        <link>https://k223kim.github.io/categories/dl/</link>
-        <pubDate>Fri, 17 Nov 2023 14:31:50 +0900</pubDate>
-        
-        <guid>https://k223kim.github.io/categories/dl/</guid>
-        <description>&lt;img src="https://k223kim.github.io/categories/dl/dl.png" alt="Featured image of post DL" /&gt;</description>
         </item>
         
     </channel>
